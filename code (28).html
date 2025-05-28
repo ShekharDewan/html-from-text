@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slashing Non-Productive Time in Drilling Operations - For Kevin Lett</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* Refined Color System for Professional Feel */
+            --primary-900: #001A33; /* Deepest Navy - More Saturated */
+            --primary-800: #00264D; /* Dark Navy */
+            --primary-700: #003366; /* Classic Navy - Main Structural Blue */
+            --primary-600: #004C99; /* Brighter Navy for accents */
+
+            --accent-gold: #B8860B; /* Darker, more antique Gold */
+            --accent-gold-light: #DAA520; /* Goldenrod - for highlights */
+
+            --neutral-900: #121212; /* Near Black */
+            --neutral-800: #222222; /* Darkest Gray for text */
+            --neutral-700: #383838; /* Main Body Text Gray */
+            --neutral-300: #CCCCCC; /* Light Gray for lines/borders */
+            --neutral-100: #F7F7F7; /* Very Light Off-White for page backgrounds */
+            --neutral-50: #FFFFFF;  /* Pure White for contrast elements */
+
+            /* Typography - Swapped Roles */
+            --font-heading: 'Crimson Pro', serif; /* Serif for Headings */
+            --font-body: 'Inter', sans-serif;    /* Sans-Serif for Body */
+            --font-mono: 'JetBrains Mono', monospace;
+
+            /* Shadows - More Subtle */
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.07);
+            --shadow-md: 0 3px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 8px 12px -3px rgba(0, 0, 0, 0.08), 0 3px 5px -2px rgba(0, 0, 0, 0.04);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        @page { size: A4; margin: 0; }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--neutral-300); /* Browser BG */
+            color: var(--neutral-700);
+            font-size: 9.5pt; /* Slightly smaller base for Inter */
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .page {
+            width: 210mm; height: 297mm;
+            margin: 0 auto 8mm auto; /* For browser view */
+            background: var(--neutral-100); /* Off-white default page */
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+        .page.white-bg { background: var(--neutral-50); } /* For specific white pages */
+
+        .page-content {
+            padding: 18mm 20mm 20mm 20mm; /* Top, H, Bottom, H */
+            height: 100%;
+            overflow: hidden;
+            position: relative; z-index: 1;
+        }
+
+        @media print {
+            body { background: white; }
+            .page { margin: 0; box-shadow: none; page-break-after: always; }
+            .page:last-child { page-break-after: avoid; }
+            .page-content { overflow: visible; }
+        }
+
+        .page-header, .page-footer {
+            position: absolute;
+            left: 20mm; right: 20mm;
+            display: flex; justify-content: space-between; align-items: center;
+            font-family: var(--font-body); /* Body font for consistency */
+            font-size: 7.5pt;
+            color: var(--neutral-500);
+            z-index: 10;
+        }
+        .page-header { top: 10mm; }
+        .page-footer { bottom: 10mm; }
+
+        .logo-mark {
+            font-weight: 600; /* Inter bold */
+            color: var(--primary-700);
+            display: flex; align-items: center;
+            gap: 6px; font-size: 8pt;
+        }
+        .logo-mark::before {
+            content: ''; width: 14px; height: 2px;
+            background: var(--accent-gold); /* Gold line */
+        }
+        .page-header .section-name { font-weight: 500; font-size: 7.5pt; }
+        .page-number {
+            font-weight: 700; /* Mono bold */
+            color: var(--primary-700);
+            font-family: var(--font-mono);
+            font-size: 7.5pt;
+        }
+
+        /* Cover Page */
+        .cover-page {
+            background: var(--primary-900);
+            color: var(--neutral-50);
+            display: flex; align-items: center;
+        }
+        .cover-page .page-content { padding: 30mm 25mm; }
+        .cover-page::before { /* Subtle texture/gradient overlay */
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(160deg, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.1) 100%);
+            opacity: 0.7;
+        }
+        .cover-content { position: relative; z-index: 2; max-width: 75%; }
+        .cover-logo {
+            font-family: var(--font-heading); /* Serif logo */
+            font-size: 14pt; font-weight: 700; /* Crimson Pro bold */
+            color: var(--accent-gold);
+            margin-bottom: 30px;
+            letter-spacing: 0.2px;
+        }
+        .cover-page h1 {
+            font-family: var(--font-heading);
+            font-size: 34pt; font-weight: 700; /* Crimson Pro bold */
+            line-height: 1.15;
+            margin-bottom: 20px;
+            letter-spacing: -0.2px;
+            color: var(--neutral-50);
+        }
+        .cover-page .subtitle {
+            font-family: var(--font-body); /* Inter for subtitle */
+            font-size: 14pt; font-weight: 400;
+            color: var(--accent-gold-light);
+            margin-bottom: 30px;
+            line-height: 1.4;
+        }
+        .cover-meta { font-family: var(--font-body); }
+        .cover-meta .prepared-for { font-size: 10pt; font-weight: 500; color: var(--neutral-300); margin-bottom: 4px; }
+        .cover-meta .client-name { font-size: 16pt; font-weight: 700; color: var(--neutral-50); margin-bottom: 1px; }
+        .cover-meta .client-title { font-size: 11pt; font-weight: 400; color: var(--neutral-300); margin-bottom: 20px; }
+        .cover-meta .date { font-size: 9pt; font-weight: 500; color: var(--accent-gold); font-family: var(--font-mono); }
+        .cover-decoration { /* More subtle geometric pattern */
+            position: absolute; bottom: -20px; right: -20px;
+            width: 35%; height: 35%; opacity: 0.05;
+            background-image: radial-gradient(var(--accent-gold) 1px, transparent 1.5px);
+            background-size: 15px 15px;
+        }
+
+        /* Table of Contents */
+        .toc-page .page-content { background-color: var(--neutral-50); }
+        .toc-title {
+            font-family: var(--font-heading);
+            font-size: 28pt; font-weight: 700;
+            color: var(--primary-800);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-700); /* Solid line */
+        }
+        .toc-list { list-style: none; }
+        .toc-item {
+            display: flex; align-items: baseline;
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 0; /* No icon indent for cleaner look */
+            font-family: var(--font-body); /* Inter for TOC items */
+            border-bottom: 1px solid var(--neutral-200); /* Lighter separator */
+            padding-bottom: 8px;
+        }
+        .toc-item:last-child { border-bottom: none; }
+        .toc-link {
+            flex-grow: 0; flex-shrink: 0;
+            text-decoration: none;
+            color: var(--neutral-800);
+            font-size: 10.5pt; font-weight: 500; /* Inter medium */
+            transition: color 0.2s ease;
+            margin-right: 6px;
+        }
+        .toc-link:hover { color: var(--accent-gold); }
+        .toc-dots {
+            flex-grow: 1;
+            border-bottom: 1px dotted var(--neutral-300);
+            margin: 0 0 3.5px 0; /* Align dots */
+            min-width: 20px;
+        }
+        .toc-page-ref {
+            font-family: var(--font-mono);
+            font-weight: 700; /* Mono bold */
+            color: var(--primary-700);
+            font-size: 9pt;
+            background: transparent; /* No background for cleaner look */
+            padding: 1px 0 1px 6px; /* Minimal padding */
+        }
+
+        /* Content Pages Typography */
+        .content-title {
+            font-family: var(--font-heading);
+            font-size: 24pt; font-weight: 700; /* Crimson Pro bold */
+            color: var(--primary-800);
+            margin: 0 0 18px 0;
+            line-height: 1.2;
+            padding-bottom: 10px;
+            border-bottom: 1.5px solid var(--primary-700);
+            page-break-after: avoid;
+        }
+        .content-title::after { display: none; } /* Removed gradient line for cleaner look */
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 18pt; font-weight: 600; /* Crimson Pro semibold */
+            color: var(--primary-700);
+            margin: 22px 0 10px 0;
+            padding-bottom: 5px;
+            border-bottom: 1px solid var(--neutral-300);
+            page-break-after: avoid;
+        }
+        .section-title::before { display: none; } /* Removed side bar for cleaner look */
+
+        .subsection-title {
+            font-family: var(--font-heading);
+            font-size: 14pt; font-weight: 600; /* Crimson Pro semibold */
+            color: var(--neutral-800);
+            margin: 18px 0 8px 0;
+            page-break-after: avoid;
+        }
+
+        p {
+            font-size: 9.5pt;
+            line-height: 1.65;
+            margin-bottom: 0.9em;
+            text-align: justify;
+            color: var(--neutral-700);
+            hyphens: auto;
+        }
+        strong { font-weight: 700; color: var(--neutral-900); font-family: var(--font-body); } /* Inter bold */
+        em { font-style: italic; color: var(--primary-700); font-family: var(--font-body); } /* Inter italic */
+
+        ul, ol { margin: 0.7em 0 0.9em 0; padding-left: 18px; }
+        li { margin-bottom: 0.5em; line-height: 1.65; font-size: 9.5pt; color: var(--neutral-700); }
+        ul li { position: relative; list-style-type: none; padding-left: 14px; }
+        ul li::before {
+            content: "\2022"; /* Standard bullet */
+            position: absolute;
+            left: 0; top: 0.05em; /* Align bullet */
+            color: var(--accent-gold);
+            font-size: 1.1em; /* Control bullet size */
+            font-weight: bold;
+        }
+        ol { list-style-position: outside; padding-left: 20px; }
+        ol li::marker { font-weight: 600; color: var(--primary-700); }
+
+
+        .highlight-box {
+            color: var(--neutral-800);
+            padding: 18px;
+            margin: 18px 0;
+            border-radius: 4px; /* Sharper radius */
+            position: relative;
+            box-shadow: var(--shadow-sm);
+            page-break-inside: avoid;
+        }
+        .highlight-box.gold-bg { background-color: #FFF8E1; border-left: 3px solid var(--accent-gold); }
+        .highlight-box.dark-bg { background-color: var(--primary-800); color: var(--neutral-100); border-left: 3px solid var(--accent-gold-light); }
+        .highlight-box::before { display: none; } /* Removed decorative element for cleaner look */
+
+        .highlight-box h3 {
+            font-family: var(--font-heading); /* Serif for H3 in highlight */
+            font-size: 15pt; font-weight: 600;
+            margin: 0 0 5px 0;
+            line-height: 1.3;
+            color: var(--primary-700); /* Darker H3 color */
+        }
+        .highlight-box.dark-bg h3 { color: var(--accent-gold-light); }
+        .highlight-box p {
+            font-family: var(--font-body); /* Inter for p in highlight */
+            font-size: 10pt; font-weight: 400;
+            margin: 0;
+            text-align: left;
+            line-height: 1.6;
+            color: var(--neutral-700);
+        }
+        .highlight-box.dark-bg p { color: var(--neutral-100); }
+
+
+        /* "Your Mandate" Box Specific Styles */
+        .io-mandate {
+            background: var(--primary-800);
+            color: var(--neutral-100);
+            padding: 20px 22px;
+            border-radius: 4px;
+            page-break-inside: avoid;
+        }
+        .io-mandate h3 {
+            font-family: var(--font-heading); /* Serif */
+            color: var(--accent-gold-light); /* Brighter gold for heading */
+            font-size: 16pt; font-weight: 700;
+            margin-bottom: 15px;
+        }
+        .io-mandate ul {
+            font-family: var(--font-body); /* Inter for list */
+            font-size: 9.5pt;
+            padding-left: 0;
+            list-style: none;
+        }
+        .io-mandate ul li {
+            padding-left: 25px;
+            margin-bottom: 10px;
+            position: relative;
+            color: var(--neutral-100); /* Ensure list item text is light */
+            line-height: 1.55;
+            font-size: 9.5pt;
+        }
+        .io-mandate ul li .mandate-icon {
+            position: absolute;
+            left: 0; top: 0px; /* Adjust alignment */
+            color: var(--accent-gold-light); /* Brighter gold for icons */
+            font-size: 1.1em;
+            width: 20px;
+            text-align: center;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin: 18px 0;
+        }
+        .stat-card {
+            background: var(--neutral-50);
+            border: 1px solid var(--neutral-200);
+            border-radius: 4px;
+            padding: 12px;
+            text-align: center;
+            transition: box-shadow 0.2s ease;
+            page-break-inside: avoid;
+        }
+        .stat-card:hover { box-shadow: var(--shadow-md); border-color: var(--accent-gold); }
+        .stat-value {
+            font-family: var(--font-mono);
+            font-size: 20pt; font-weight: 700;
+            color: var(--primary-700);
+            line-height: 1;
+            margin-bottom: 2px;
+        }
+        .stat-label {
+            font-family: var(--font-body); /* Inter */
+            font-size: 7.5pt; font-weight: 500;
+            color: var(--neutral-600);
+            text-transform: uppercase;
+            letter-spacing: 0.15px;
+        }
+
+        .process-flow {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            margin: 25px 0; position: relative; page-break-inside: avoid;
+        }
+        .process-step { flex: 1; text-align: center; position: relative; z-index: 2; padding: 0 3px; }
+        .process-step:not(:last-child)::after {
+            content: ''; position: absolute;
+            top: 21px; left: calc(50% + 22px);
+            width: calc(100% - 44px); height: 1px;
+            background: var(--neutral-300); z-index: -1;
+        }
+        .step-icon {
+            width: 42px; height: 42px;
+            background: var(--primary-700); color: white;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 8px;
+            font-size: 18px;
+            box-shadow: var(--shadow-sm);
+        }
+        .step-title {
+            font-family: var(--font-body); /* Inter */
+            font-size: 9.5pt; font-weight: 600;
+            color: var(--neutral-800);
+            margin-bottom: 2px;
+        }
+        .step-description { font-size: 7.5pt; color: var(--neutral-600); line-height: 1.35; }
+
+        .quote-block {
+            position: relative;
+            padding: 18px 22px 18px 28px;
+            margin: 25px 0;
+            background: var(--neutral-100); /* Lighter BG for quote */
+            border-left: 2.5px solid var(--accent-gold);
+            page-break-inside: avoid;
+            box-shadow: var(--shadow-sm);
+        }
+        .quote-block::before {
+            content: '\f10d';
+            font-family: "Font Awesome 6 Free"; font-weight: 900;
+            position: absolute;
+            top: 10px; left: 10px;
+            font-size: 22pt;
+            color: var(--accent-gold);
+            opacity: 0.3;
+        }
+        .quote-text {
+            font-family: var(--font-body); /* Inter for quote text */
+            font-size: 11pt; font-style: italic;
+            line-height: 1.6;
+            color: var(--neutral-700);
+            margin: 0;
+            padding-left: 5px;
+        }
+        .quote-attribution {
+            font-family: var(--font-body); /* Inter */
+            font-size: 8.5pt; font-weight: 500; /* Inter medium */
+            color: var(--primary-700);
+            margin-top: 8px;
+            text-align: right;
+        }
+
+        .cta-page .page-content {
+            background: var(--primary-900); /* Solid dark for CTA */
+            color: white;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center;
+        }
+        .cta-content { max-width: 65%; }
+        .cta-title {
+            font-family: var(--font-heading); /* Serif */
+            font-size: 28pt; font-weight: 700;
+            margin-bottom: 18px;
+            line-height: 1.2;
+            color: white;
+        }
+        .cta-title::after { display: none; }
+        .cta-subtitle {
+            font-family: var(--font-body); /* Inter */
+            font-size: 12pt; font-weight: 400;
+            margin-bottom: 25px;
+            color: var(--neutral-200);
+            line-height: 1.5;
+        }
+        .cta-button {
+            display: inline-flex; align-items: center;
+            gap: 8px;
+            background: var(--accent-gold); /* Solid gold */
+            color: var(--primary-900); /* Dark text on gold */
+            padding: 12px 25px;
+            border-radius: 4px; /* Sharper */
+            text-decoration: none;
+            font-family: var(--font-body); /* Inter */
+            font-weight: 600; /* Inter semibold */
+            font-size: 11pt;
+            box-shadow: var(--shadow-md);
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+        .cta-button:hover { background-color: var(--accent-gold-light); transform: translateY(-1px); }
+        .cta-button::before { display:none; } /* Removed shine for cleaner look */
+        .cta-contact {
+            margin-top: 30px;
+            font-family: var(--font-body); /* Inter */
+            font-size: 8.5pt;
+            color: var(--neutral-300);
+            line-height: 1.6;
+        }
+        .cta-contact strong { color: var(--neutral-100); font-weight: 600; }
+        .cta-page .page-header .logo-mark, .cta-page .page-footer .logo-mark { color: var(--accent-gold-light); }
+        .cta-page .page-header .section-name, .cta-page .page-footer .page-number { color: var(--neutral-300); }
+
+
+        .pattern-dots, .pattern-grid { display: none; } /* Removed distracting patterns for cleaner professional look */
+
+        .timeline { position: relative; padding-left: 20px; margin: 18px 0; page-break-inside: avoid; }
+        .timeline::before {
+            content: ''; position: absolute;
+            left: 5px; top: 3px; bottom: 3px;
+            width: 1px; background: var(--neutral-300);
+        }
+        .timeline-item { position: relative; margin-bottom: 18px; page-break-inside: avoid; }
+        .timeline-item::before {
+            content: ''; position: absolute;
+            left: -18px; top: 1px;
+            width: 10px; height: 10px;
+            background: var(--accent-gold);
+            border: 1.5px solid var(--neutral-100); /* Match page BG */
+            border-radius: 50%;
+            box-shadow: var(--shadow-sm);
+            z-index: 1;
+        }
+        .timeline-title {
+            font-family: var(--font-body); /* Inter */
+            font-weight: 600; /* Inter semibold */
+            color: var(--primary-700);
+            margin-bottom: 2px;
+            font-size: 10pt;
+        }
+        .timeline-content { font-size: 9pt; color: var(--neutral-700); line-height: 1.55; }
+
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 18px;
+            margin: 18px 0;
+            page-break-inside: avoid;
+        }
+        .icon-item { text-align: center; }
+        .icon-circle {
+            width: 55px; height: 55px;
+            background: var(--primary-700); /* Solid color */
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 8px;
+            font-size: 24px;
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+        .icon-label {
+            font-family: var(--font-body); /* Inter */
+            font-weight: 500; /* Inter medium */
+            font-size: 8.5pt;
+            color: var(--neutral-700);
+        }
+
+        .sources-page ul { list-style-type: none; padding-left: 0; font-family: var(--font-body); } /* Inter */
+        .sources-page li {
+            font-size: 8.5pt;
+            margin-bottom: 0.4em;
+            padding-left: 16px;
+            position: relative;
+            line-height: 1.45;
+            color: var(--neutral-600);
+        }
+        .sources-page li::before {
+            content: "\f0da";
+            font-family: "Font Awesome 6 Free"; font-weight: 900;
+            color: var(--accent-gold);
+            position: absolute; left: 0; top: 0px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Cover Page -->
+    <div class="page cover-page">
+        <div class="page-content">
+            <div class="cover-content">
+                <div class="cover-logo">AI Forward Inc.</div>
+                <h1>The Hidden Drain on Your Drilling Budget</h1>
+                <div class="subtitle">How Integrated Operations Can Slash Non-Productive Time by 50%</div>
+                <div class="cover-meta">
+                    <div class="prepared-for">Prepared exclusively for</div>
+                    <div class="client-name">Kevin Lett</div>
+                    <div class="client-title">Director of Operations</div>
+                    <div class="date">November 2023</div>
+                </div>
+            </div>
+            <div class="cover-decoration"></div>
+        </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="page toc-page">
+        <header class="page-header">
+            <span class="logo-mark">AI Forward Inc.</span>
+        </header>
+        <div class="page-content">
+            <h2 class="toc-title">Contents</h2>
+            <ul class="toc-list">
+                <li class="toc-item">
+                    <a href="#intro" class="toc-link">Executive Summary: The $38 Million Problem</a>
+                    <span class="toc-dots"></span>
+                    <span class="toc-page-ref">03</span>
+                </li>
+                <li class="toc-item">
+                    <a href="#problem" class="toc-link">Understanding the NPT Crisis</a>
+                    <span class="toc-dots"></span>
+                    <span class="toc-page-ref">04</span>
+                </li>
+                <li class="toc-item">
+                    <a href="#solution" class="toc-link">The Integrated Operations Revolution</a>
+                    <span class="toc-dots"></span>
+                    <span class="toc-page-ref">05</span>
+                </li>
+                <li class="toc-item">
+                    <a href="#pillars" class="toc-link">Four Pillars of Success</a>
+                    <span class="toc-dots"></span>
+                    <span class="toc-page-ref">06</span>
+                </li>
+                <li class="toc-item">
+                    <a href="#proof" class="toc-link">Real-World Success Stories</a>
+                    <span class="toc-dots"></span>
+                    <span class="toc-page-ref">07</span>
+                </li>
+                 <li class="toc-item">
+                    <a href="#barriers" class="toc-link">Breaking Down NPT Barriers</a>
+                    <span class="toc-dots"></span>
+                    <span class="toc-page-ref">09</span>
+                </li>
+                <li class="toc-item">
+                    <a href="#roadmap" class="toc-link">Your Implementation Roadmap</a>
+                    <span class="toc-dots"></span>
+                    <span class="toc-page-ref">10</span>
+                </li>
+                <li class="toc-item">
+                    <a href="#leadership" class="toc-link">Leadership & Ethics</a>
+                    <span class="toc-dots"></span>
+                    <span class="toc-page-ref">12</span>
+                </li>
+                <li class="toc-item">
+                    <a href="#action" class="toc-link">Take Action Today</a>
+                    <span class="toc-dots"></span>
+                    <span class="toc-page-ref">13</span>
+                </li>
+                 <li class="toc-item">
+                    <a href="#sources" class="toc-link">Sources</a>
+                    <span class="toc-dots"></span>
+                    <span class="toc-page-ref">14</span>
+                </li>
+            </ul>
+        </div>
+        <footer class="page-footer">
+            <span class="logo-mark">AI Forward Inc.</span>
+            <span class="page-number">02</span>
+        </footer>
+    </div>
+
+    <!-- Executive Summary Page -->
+    <div class="page white-bg"> <!-- Using white for main content pages for max contrast -->
+        <header class="page-header">
+            <span class="logo-mark">AI Forward Inc.</span>
+            <span class="section-name">Executive Summary</span>
+        </header>
+        <div class="page-content">
+            <h1 class="content-title" id="intro">The $38 Million Problem Hiding in Plain Sight</h1>
+            <div class="highlight-box gold-bg">
+                <div class="highlight-box-content">
+                    <h3>$38 Million</h3>
+                    <p>Lost annually from just 27 days of Non-Productive Time per company.</p>
+                </div>
+            </div>
+            <p>Every moment your drilling operations stand idle represents more than lost time—it's lost opportunity, lost revenue, and lost competitive advantage. Yet most operators continue fighting Non-Productive Time (NPT) with outdated, reactive approaches that address symptoms rather than root causes.</p>
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-value">24.9%</div>
+                    <div class="stat-label">Typical NPT Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">80%</div>
+                    <div class="stat-label">Human Factor Incidents</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">50%</div>
+                    <div class="stat-label">Potential NPT Reduction</div>
+                </div>
+            </div>
+            <p>This white paper reveals how industry leaders are leveraging Integrated Operations (IO) to achieve dramatic NPT reductions—transforming their drilling operations from cost centers into competitive advantages. We will explore why traditional NPT reduction efforts often fall short, how Integrated Operations creates a step-change in operational efficiency, and present proven strategies that have saved operators over $40 million annually per rig set. A practical roadmap for implementing IO in your organization, supported by real-world case studies, will provide actionable insights for immediate impact.</p>
+        </div>
+        <footer class="page-footer">
+            <span class="logo-mark">AI Forward Inc.</span>
+            <span class="page-number">03</span>
+        </footer>
+    </div>
+
+    <!-- Understanding NPT Page -->
+    <div class="page white-bg">
+        <header class="page-header">
+            <span class="logo-mark">AI Forward Inc.</span>
+            <span class="section-name">The NPT Crisis</span>
+        </header>
+        <div class="page-content">
+            <h1 class="content-title" id="problem">Understanding the NPT Crisis: Beyond Equipment Failure</h1>
+            <p>Non-Productive Time isn't merely a consequence of equipment malfunctions or adverse weather. It's a complex symptom of systemic dysfunctions in how drilling operations are planned, executed, and optimized. While equipment failures are a visible trigger, accounting for over 50% of NPT incidents, a deeper analysis reveals that <strong>human factors contribute to more than 80% of all drilling incidents overall.</strong></p>
+            <p>Consider your last significant NPT event. A tool may have failed, but the crucial questions extend further: Was this failure predictable from existing maintenance data? Did the geology team possess insights that could have preempted the issue? Were onshore experts actively monitoring the situation in real-time? Most importantly, was there effective, seamless collaboration among your teams to mitigate the impact once the problem surfaced?</p>
+            <div class="quote-block">
+                <p class="quote-text">The uncomfortable truth is that NPT stemming from preventable issues can consume anywhere from 5% to 30% of the total well delivery time. This translates to millions of dollars that could have been channeled into value-generating activities.</p>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span class="logo-mark">AI Forward Inc.</span>
+            <span class="page-number">04</span>
+        </footer>
+    </div>
+
+    <!-- Integrated Operations Solution Page -->
+    <div class="page white-bg">
+        <header class="page-header">
+            <span class="logo-mark">AI Forward Inc.</span>
+            <span class="section-name">The IO Revolution</span>
+        </header>
+        <div class="page-content">
+            <h1 class="content-title" id="solution">The Integrated Operations (IO) Revolution</h1>
+            <p>Integrated Operations (IO) signifies a fundamental paradigm shift, moving away from traditional, siloed operational practices towards a holistic, interconnected approach. It strategically melds <strong>people, diverse disciplines, organizational units, re-engineered work processes, and advanced information and communication technology.</strong> The singular goal? To enable smarter, faster, and more effective decision-making across the board.</p>
+            <div class="highlight-box dark-bg">
+                <div class="highlight-box-content">
+                    <h3 style="display: flex; align-items: center; gap: 10px;"><i class="fas fa-lightbulb"></i>The IO Difference</h3>
+                    <p style="font-size: 10.5pt;">Unlike typical "digital transformation" initiatives, IO's core is not the technology itself. Instead, it's about <strong>how technology empowers human collaboration</strong> to resolve complex challenges with greater speed and efficacy.</p>
+                </div>
+            </div>
+            <h2 class="section-title">Transforming Data into Decisive Action</h2>
+            <div class="process-flow">
+                <div class="process-step">
+                    <div class="step-icon"><i class="fas fa-database"></i></div>
+                    <div class="step-title">Data Integration</div>
+                    <div class="step-description">Unify disparate data sources</div>
+                </div>
+                <div class="process-step">
+                    <div class="step-icon"><i class="fas fa-cogs"></i></div>
+                    <div class="step-title">Process Re-engineering</div>
+                    <div class="step-description">Optimize collaborative workflows</div>
+                </div>
+                <div class="process-step">
+                    <div class="step-icon"><i class="fas fa-brain"></i></div>
+                    <div class="step-title">Intelligent Decisions</div>
+                    <div class="step-description">Enable proactive interventions</div>
+                </div>
+            </div>
+            <p>By fostering an environment of shared situational awareness and collaborative problem-solving, IO moves operations from a reactive stance to a proactive, predictive model, directly impacting NPT reduction and overall performance.</p>
+        </div>
+        <footer class="page-footer">
+            <span class="logo-mark">AI Forward Inc.</span>
+            <span class="page-number">05</span>
+        </footer>
+    </div>
+
+    <!-- Four Pillars Page -->
+    <div class="page white-bg">
+        <header class="page-header">
+            <span class="logo-mark">AI Forward Inc.</span>
+            <span class="section-name">IO Framework</span>
+        </header>
+        <div class="page-content">
+            <h1 class="content-title" id="pillars">The Four Pillars of Successful IO Implementation</h1>
+            <p>Our extensive analysis of successful Integrated Operations implementations consistently reveals four interdependent pillars. Neglecting any single pillar significantly undermines the potential of the entire initiative, transforming a strategic imperative into a costly, ineffective project.</p>
+            <div class="icon-grid" style="grid-template-columns: 1fr 1fr; gap: 18px;">
+                <div class="icon-item" style="background: var(--neutral-100); padding: 15px; border-radius: 6px; box-shadow: var(--shadow-sm); border-top: 2.5px solid var(--accent-gold);">
+                    <div class="icon-circle" style="background: var(--accent-gold); color: var(--primary-900); width:45px; height:45px; font-size:20px;"><i class="fas fa-user-tie"></i></div>
+                    <h3 class="icon-label" style="font-size: 10.5pt; color: var(--primary-700); margin-bottom: 6px;">Transformational Leadership</h3>
+                    <p style="font-size: 9pt; line-height: 1.45; text-align: left;">Operations Directors must visibly champion the IO vision, driving cultural change and ensuring sustained commitment. This is not a delegable task; it requires personal, active sponsorship.</p>
+                </div>
+                <div class="icon-item" style="background: var(--neutral-100); padding: 15px; border-radius: 6px; box-shadow: var(--shadow-sm); border-top: 2.5px solid var(--accent-teal);">
+                    <div class="icon-circle" style="background: var(--accent-teal); width:45px; height:45px; font-size:20px;"><i class="fas fa-users-cog"></i></div>
+                    <h3 class="icon-label" style="font-size: 10.5pt; color: var(--primary-700); margin-bottom: 6px;">The Right People & Skills</h3>
+                    <p style="font-size: 9pt; line-height: 1.45; text-align: left;">Assemble cross-functional teams with clearly defined roles. Equip them with necessary skills and collaborative tools to operate effectively across disciplines and geographies.</p>
+                </div>
+                <div class="icon-item" style="background: var(--neutral-100); padding: 15px; border-radius: 6px; box-shadow: var(--shadow-sm); border-top: 2.5px solid var(--accent-coral);">
+                    <div class="icon-circle" style="background: var(--accent-coral); width:45px; height:45px; font-size:20px;"><i class="fas fa-project-diagram"></i></div>
+                    <h3 class="icon-label" style="font-size: 10.5pt; color: var(--primary-700); margin-bottom: 6px;">Optimized Business Processes</h3>
+                    <p style="font-size: 9pt; line-height: 1.45; text-align: left;">Redesign core operational workflows to leverage real-time data, breaking down information silos that traditionally impede efficiency and rapid decision-making.</p>
+                </div>
+                <div class="icon-item" style="background: var(--neutral-100); padding: 15px; border-radius: 6px; box-shadow: var(--shadow-sm); border-top: 2.5px solid var(--primary-600);">
+                    <div class="icon-circle" style="background: var(--primary-600); width:45px; height:45px; font-size:20px;"><i class="fas fa-server"></i></div>
+                    <h3 class="icon-label" style="font-size: 10.5pt; color: var(--primary-700); margin-bottom: 6px;">Enabling Technology</h3>
+                    <p style="font-size: 9pt; line-height: 1.45; text-align: left;">Implement robust digital platforms, advanced analytical capabilities, and state-of-the-art communication tools to support integrated workflows and data-driven decisions.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span class="logo-mark">AI Forward Inc.</span>
+            <span class="page-number">06</span>
+        </footer>
+    </div>
+
+    <!-- Success Stories Page 1 -->
+    <div class="page white-bg">
+        <header class="page-header">
+            <span class="logo-mark">AI Forward Inc.</span>
+            <span class="section-name">Success Stories</span>
+        </header>
+        <div class="page-content">
+            <h1 class="content-title" id="proof">Real-World Success: How Leaders Are Winning with IO</h1>
+            <h2 class="section-title">Shell's Systematic Approach to Tool Failures</h2>
+            <p>Shell's Gulf of Mexico operations established a dedicated Root Cause Failure Analysis (RCFA) team. This team focused exclusively on NPT events exceeding six hours, which critically accounted for 80% of their total NPT. Their methodical approach involved:</p>
+            <ul>
+                <li><strong>Dedicated Personnel:</strong> Clear roles and unbiased analysis protocols.</li>
+                <li><strong>Vendor Collaboration:</strong> Treating vendors as partners in failure investigations, not adversaries.</li>
+                <li><strong>True Root Cause Focus:</strong> Digging beyond superficial symptoms to systemic issues.</li>
+            </ul>
+            <p>The result was a significant NPT reduction and substantial yearly multi-million-dollar savings. The pivotal insight: <em>When NPT is treated as a learning opportunity rather than a blame exercise, the collective intelligence of the entire supply chain is unlocked.</em></p>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-title">Year 1: Foundation & Protocol Establishment</div>
+                    <div class="timeline-content">Dedicated RCFA team formed, investigation protocols standardized. Executive sponsorship crucial in overcoming initial resistance to new collaborative methods.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-title">Year 2: Accelerated Learning & NPT Reduction</div>
+                    <div class="timeline-content">NPT events dropped by 35% as teams internalized new processes and data-driven insights. Vendor relationships transformed into proactive partnerships.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-title">Year 3: Sustained Optimization & Scalability</div>
+                    <div class="timeline-content">Achieved steady-state NPT levels well below industry average, yielding consistent multi-million dollar annual savings. The successful model began replication across other operational regions.</div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span class="logo-mark">AI Forward Inc.</span>
+            <span class="page-number">07</span>
+        </footer>
+    </div>
+
+    <!-- Success Stories Page 2 -->
+    <div class="page white-bg">
+        <header class="page-header">
+            <span class="logo-mark">AI Forward Inc.</span>
+            <span class="section-name">Success Stories</span>
+        </header>
+        <div class="page-content">
+            <h1 class="content-title">The Power of Automated Learning Systems in IO</h1>
+            <p>Another operator's implementation of an integrated methodology, combining advanced analytical software with a robust Learning Management System (LMS) across 26 rigs, vividly demonstrates the transformative potential of systematic IO.</p>
+             <div class="highlight-box gold-bg">
+                <div class="highlight-box-content">
+                    <h3 style="display: flex; align-items: center; gap: 10px;"><i class="fas fa-chart-bar"></i>Remarkable Results Achieved</h3>
+                    <div class="stat-grid" style="grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px;">
+                        <div class="stat-card" style="background: rgba(255,255,255,0.5); color: var(--primary-900); padding: 10px;">
+                            <div class="stat-value" style="color: var(--primary-700); font-size: 17pt;">24.9% <i class="fas fa-arrow-right" style="font-size:0.6em;"></i> 17.7%</div>
+                            <div class="stat-label" style="color: var(--neutral-700); font-size: 7pt;">NPT Rate Reduction</div>
+                        </div>
+                        <div class="stat-card" style="background: rgba(255,255,255,0.5); color: var(--primary-900); padding: 10px;">
+                            <div class="stat-value" style="color: var(--primary-700); font-size: 17pt;">450+</div>
+                            <div class="stat-label" style="color: var(--neutral-700); font-size: 7pt;">Operational Days Saved Annually</div>
+                        </div>
+                        <div class="stat-card" style="background: rgba(255,255,255,0.5); color: var(--primary-900); padding: 10px;">
+                            <div class="stat-value" style="color: var(--primary-700); font-size: 17pt;">14</div>
+                            <div class="stat-label" style="color: var(--neutral-700); font-size: 7pt;">Additional Wells/Year Equivalent</div>
+                        </div>
+                        <div class="stat-card" style="background: rgba(255,255,255,0.5); color: var(--primary-900); padding: 10px;">
+                            <div class="stat-value" style="color: var(--primary-700); font-size: 17pt;">$40M+</div>
+                            <div class="stat-label" style="color: var(--neutral-700); font-size: 7pt;">Savings Per Rig Set Yearly</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p>The system automatically monitored and mapped NPT events, rapidly identified root causes through integrated data analysis, and systematically captured learnings within the LMS to prevent recurrence. Notably, even rig contractor-related NPT saw a dramatic drop from 11.2% to 5.4%, underscoring how IO benefits permeate the entire operational ecosystem.</p>
+            <h2 class="section-title" style="margin-top: 15px;">Data-Driven Precision in Problem Solving</h2>
+            <p>A third company utilized statistical analysis to scrutinize 39 significant NPT events, pinpointing drill bit failures as representing 56% of all mechanical failures. Their targeted interventions, driven by this data, included enhanced preventative maintenance schedules based on observed failure patterns, rigorous quality checks during bit installation, and specialized operator training on vulnerable components and operational best practices. The mean NPT length per incident plummeted from 3.32 hours to just 1.6 hours—a remarkable reduction of over 50%.</p>
+        </div>
+        <footer class="page-footer">
+            <span class="logo-mark">AI Forward Inc.</span>
+            <span class="page-number">08</span>
+        </footer>
+    </div>
+
+    <!-- Breaking Down Barriers Page -->
+     <div class="page white-bg">
+        <header class="page-header">
+            <span class="logo-mark">AI Forward Inc.</span>
+            <span class="section-name">Overcoming NPT Hurdles</span>
+        </header>
+        <div class="page-content">
+            <h1 class="content-title" id="barriers">Breaking Down the Barriers That Keep NPT High</h1>
+            <p>The most successful Integrated Operations implementations share common characteristics that directly address the deep-rooted causes of persistent NPT. These are not merely technological fixes but fundamental shifts in operational philosophy and practice.</p>
+            <h2 class="section-title">Fostering Collaborative Decision-Making Environments</h2>
+            <p>Traditional operations often suffer from the "handoff problem," where critical information is lost or diluted as responsibility transfers between disparate teams (e.g., geology, drilling, completions). IO actively dismantles these silos by creating always-on, dynamic collaboration environments. In these settings, multidisciplinary teams can work together seamlessly, leveraging shared data and insights:</p>
+            <ul>
+                <li><strong>Real-time Connectivity:</strong> Instantaneous data and communication links between offshore platforms, remote sites, and onshore support centers.</li>
+                <li><strong>Shared Visualization:</strong> Advanced 3D visualization tools allowing geologists, reservoir engineers, and drilling engineers to concurrently view and interpret the same subsurface models and operational data.</li>
+                <li><strong>Integrated Operations Centers (IOCs):</strong> Co-location or virtual co-location of key personnel, fostering rapid, informed decision-making and proactive problem-solving.</li>
+            </ul>
+            <h2 class="section-title">Real-Time Data as the Undisputed Foundation</h2>
+            <p>Effective data management is paramount, ensuring data validation, timeliness, relevance, accessibility, and ultimate usability. However, the true transformative value emerges when this high-quality data is converted into actionable intelligence. Advanced analytics within an IO framework can:</p>
+            <ul>
+                <li><strong>Predict Equipment Failures:</strong> Proactively identify potential equipment malfunctions before they escalate into costly NPT events.</li>
+                <li><strong>Optimize Drilling Parameters:</strong> Continuously analyze real-time drilling data to identify optimal parameters, thereby reducing NPT risk and improving drilling efficiency.</li>
+                <li><strong>Automate Root Cause Analysis:</strong> Intelligently suggest probable root causes for NPT events by integrating and analyzing data from diverse operational systems.</li>
+            </ul>
+             <h2 class="section-title">Leveraging Remote Expertise: When and Where Needed</h2>
+            <p>IO enables the strategic deployment of scarce, high-value expertise across multiple operations simultaneously. Instead of the costly and often impractical approach of stationing specialists on every rig or site, centralized expert teams can provide real-time, data-driven support to numerous drilling locations. This model significantly reduces response times to emerging issues and ensures a consistently high quality of decision-making across the operational portfolio.</p>
+        </div>
+        <footer class="page-footer">
+            <span class="logo-mark">AI Forward Inc.</span>
+            <span class="page-number">09</span>
+        </footer>
+    </div>
+
+
+    <!-- Implementation Roadmap Page 1 -->
+    <div class="page white-bg">
+        <header class="page-header">
+            <span class="logo-mark">AI Forward Inc.</span>
+            <span class="section-name">Implementation Roadmap</span>
+        </header>
+        <div class="page-content">
+            <h1 class="content-title" id="roadmap">Your Roadmap to NPT Reduction Through IO</h1>
+            <p>Achieving substantial NPT reduction via Integrated Operations requires a structured, phased approach. This roadmap, based on industry best practices and successful deployments, is designed to minimize risk while maximizing the realization of value at each stage.</p>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-title">Phase 1: Assess & Strategize (Months 1-3)</div>
+                    <div class="timeline-content">
+                        <p><strong>Objective:</strong> Understand current NPT landscape and build a compelling business case.</p>
+                        <ul>
+                            <li>Conduct comprehensive NPT audit: Identify top contributors by cost/frequency.</li>
+                            <li>Evaluate existing collaboration effectiveness and data infrastructure maturity.</li>
+                            <li>Develop a quantified benefits case and identify key stakeholders.</li>
+                        </ul>
+                        <div class="quote-block" style="padding: 10px 15px; margin: 10px 0; font-size: 9pt; background: var(--neutral-100);">
+                            <p class="quote-text" style="font-size: 9.5pt; font-style: normal;"><strong>Critical Question:</strong> What percentage of your NPT events could have been prevented with enhanced information sharing or faster expert intervention?</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-title">Phase 2: Design & Pilot (Months 4-9)</div>
+                    <div class="timeline-content">
+                        <p><strong>Objective:</strong> Prove IO concepts on a manageable scale and refine solutions.</p>
+                        <ul>
+                            <li>Select 2-3 pilot rigs/assets, focusing on high-impact NPT categories.</li>
+                            <li>Design specific IO solutions (people, process, technology) tailored to pilot scope.</li>
+                            <li>Establish clear Key Performance Indicators (KPIs) and success metrics.</li>
+                        </ul>
+                        <div class="quote-block" style="padding: 10px 15px; margin: 10px 0; font-size: 9pt; background: var(--neutral-100);">
+                             <p class="quote-text" style="font-size: 9.5pt; font-style: normal;"><strong>Key Insight (Shell):</strong> Prioritize NPT events exceeding six hours; they often constitute 80% of total NPT impact.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span class="logo-mark">AI Forward Inc.</span>
+            <span class="page-number">10</span>
+        </footer>
+    </div>
+
+    <!-- Implementation Roadmap Page 2 -->
+    <div class="page white-bg">
+        <header class="page-header">
+            <span class="logo-mark">AI Forward Inc.</span>
+            <span class="section-name">Implementation Roadmap</span>
+        </header>
+        <div class="page-content">
+            <h1 class="content-title">Roadmap: Scaling and Sustaining IO Success</h1>
+             <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-title">Phase 3: Implement & Scale (Months 10-18)</div>
+                    <div class="timeline-content">
+                        <p><strong>Objective:</strong> Systematically roll out proven IO solutions across the wider organization.</p>
+                        <ul>
+                            <li>Provide comprehensive training on new collaborative workflows and technologies.</li>
+                            <li>Implement robust change management strategies to address resistance and foster adoption.</li>
+                            <li>Establish clear roles, responsibilities, and governance structures for the new IO environment.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-title">Phase 4: Sustain & Optimize (Ongoing)</div>
+                    <div class="timeline-content">
+                        <p><strong>Objective:</strong> Embed IO as the standard way of working and drive continuous improvement.</p>
+                        <ul>
+                            <li>Continuously monitor performance against NPT reduction targets and other IO KPIs.</li>
+                            <li>Foster a strong organizational culture where NPT events are systematically treated as learning and improvement opportunities.</li>
+                            <li>Regularly refine processes and technology configurations based on operational data and user feedback.</li>
+                            <li>Actively share lessons learned and best practices across all operational units.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <h2 class="section-title" style="margin-top: 15px;">Critical Success Factors for IO Adoption</h2>
+            <div class="icon-grid" style="grid-template-columns: repeat(3, 1fr); gap: 15px;">
+                <div class="icon-item">
+                    <div class="icon-circle"><i class="fas fa-users"></i></div>
+                    <div class="icon-label">Executive Sponsorship</div>
+                </div>
+                <div class="icon-item">
+                    <div class="icon-circle"><i class="fas fa-bullhorn"></i></div>
+                    <div class="icon-label">Clear Communication</div>
+                </div>
+                <div class="icon-item">
+                    <div class="icon-circle"><i class="fas fa-cogs"></i></div>
+                    <div class="icon-label">Iterative Approach</div>
+                </div>
+                <div class="icon-item">
+                    <div class="icon-circle"><i class="fas fa-check-circle"></i></div>
+                    <div class="icon-label">User Buy-in & Training</div>
+                </div>
+                <div class="icon-item">
+                    <div class="icon-circle"><i class="fas fa-chart-pie"></i></div>
+                    <div class="icon-label">Measurable KPIs</div>
+                </div>
+                <div class="icon-item">
+                    <div class="icon-circle"><i class="fas fa-recycle"></i></div>
+                    <div class="icon-label">Continuous Feedback Loop</div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span class="logo-mark">AI Forward Inc.</span>
+            <span class="page-number">11</span>
+        </footer>
+    </div>
+
+    <!-- Leadership & Ethics Page -->
+    <div class="page white-bg">
+        <header class="page-header">
+            <span class="logo-mark">AI Forward Inc.</span>
+            <span class="section-name">Leadership & Ethics</span>
+        </header>
+        <div class="page-content">
+            <h1 class="content-title" id="leadership">The Leadership Imperative in IO Transformation</h1>
+            <p>The critical differentiator between successful Integrated Operations implementations and costly, underperforming technology projects is unequivocal: <strong>unwavering leadership commitment to profound cultural transformation.</strong> As an Operations Director, your role extends far beyond mere budget approval; you must become the active, visible champion of this new operational paradigm.</p>
+            <div class="highlight-box io-mandate">
+                <div class="highlight-box-content">
+                    <h3>Your Mandate as an IO Champion:</h3>
+                    <ul>
+                        <li><span class="mandate-icon"><i class="fas fa-bullseye fa-fw"></i></span>Articulate a compelling vision linking IO directly to NPT reduction and overarching business goals.</li>
+                        <li><span class="mandate-icon"><i class="fas fa-users fa-fw"></i></span>Actively dismantle operational silos by mandating and modeling cross-functional collaboration.</li>
+                        <li><span class="mandate-icon"><i class="fas fa-lightbulb fa-fw"></i></span>Ensure NPT events are consistently treated as valuable learning opportunities, not occasions for blame.</li>
+                        <li><span class="mandate-icon"><i class="fas fa-tools fa-fw"></i></span>Commit the necessary investment in training, tools, and resources for your teams to succeed.</li>
+                        <li><span class="mandate-icon"><i class="fas fa-handshake fa-fw"></i></span>Personally model the collaborative behaviors and data-driven decision-making you expect.</li>
+                    </ul>
+                </div>
+            </div>
+            <h2 class="section-title">The Uncompromising Ethical Foundation</h2>
+            <p>The relentless pursuit of NPT reduction must, without exception, operate within an unwavering ethical framework that prioritizes safety and well integrity above all else. Integrated Operations, when implemented correctly, inherently provides enhanced tools and processes for superior safety performance. This is achieved through more accurate risk identification, proactive real-time monitoring of critical parameters, and significantly faster access to expert intervention during emergent situations. A well-designed IO system does not incentivize cutting corners; rather, it furnishes the comprehensive information and collaborative capabilities essential for making better, safer decisions with greater speed and confidence.</p>
+        </div>
+        <footer class="page-footer">
+            <span class="logo-mark">AI Forward Inc.</span>
+            <span class="page-number">12</span>
+        </footer>
+    </div>
+
+    <!-- Call to Action Page -->
+    <div class="page cta-page">
+        <!-- No header on full bleed CTA page for cleaner look -->
+        <div class="page-content">
+            <div class="cta-content">
+                <h1 class="cta-title" id="action">Your Next Move Determines Your Future Operational Landscape</h1>
+                <p class="cta-subtitle">Non-Productive Time will persist as a significant drain on your drilling budget until its root causes are addressed systematically and holistically. The industry leaders achieving 30-50% NPT reductions are not relying on luck; they are diligently applying proven Integrated Operations principles to fundamentally transform how their teams collaborate and execute.</p>
+                <div class="quote-block" style="background: rgba(255,255,255,0.05); border-left-color: var(--accent-gold); margin: 20px auto; max-width: 85%; padding: 12px;">
+                    <p class="quote-text" style="color: white; font-size: 12pt; font-style: normal; text-align: center;">The critical question is no longer whether you can afford to implement Integrated Operations. It is, unequivocally, whether you can afford <strong>not</strong> to.</p>
+                </div>
+                <p style="font-size: 10pt; color: var(--neutral-200); margin-bottom: 20px; font-family: var(--font-body); line-height:1.55;">Every day of inaction is another day of preventable NPT, another ceded opportunity for competitors to gain operational advantage, and another missed chance to demonstrate the transformational leadership your organization requires to thrive in a rapidly evolving industry.</p>
+                <a href="mailto:contact@aiforwardinc.com?subject=IO%20Implementation%20Discussion%20for%20Kevin%20Lett&body=Dear%20AI%20Forward%20Inc.%20Team,%0A%0AI%20have%20reviewed%20the%20report%20on%20NPT%20reduction%20through%20Integrated%20Operations%20and%20would%20like%20to%20schedule%20a%20discussion%20on%20how%20we%20can%20implement%20these%20strategies.%0A%0ABest%20regards,%0AKevin%20Lett" class="cta-button">
+                    Initiate Your IO Transformation
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <div class="cta-contact">
+                    <p><strong>AI Forward Inc.</strong> | Enterprise Operations Excellence</p>
+                    <p>contact@aiforwardinc.com | +1 (555) 123-4567 | www.aiforward.com</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span class="logo-mark" style="color: var(--accent-gold-light);">AI Forward Inc.</span>
+            <span class="page-number" style="color: var(--accent-gold-light);">13</span>
+        </footer>
+    </div>
+
+     <!-- Sources Page -->
+    <div class="page white-bg"> <!-- White BG for readability -->
+        <header class="page-header">
+            <span class="logo-mark">AI Forward Inc.</span>
+            <span class="section-name">Sources</span>
+        </header>
+        <div class="page-content sources-page">
+            <h1 class="content-title" id="sources">Referenced Sources</h1>
+            <ul>
+                <li>AIP Palantir - NPT Definition and Impact</li>
+                <li>Science Publishing Group - NPT Reduction Strategies</li>
+                <li>ResearchGate - Risk Management Integration</li>
+                <li>Minitab - Data-Driven NPT Reduction</li>
+                <li>OnePetro - Shell NPT Reduction Case Study (SPE-103231-MS, SPE-128665-MS)</li>
+                <li>SPE - Integrated Operations in Statoil (Now Equinor) (e.g., SPE-112289-MS)</li>
+                <li>ResearchGate - NPT Reduction Through LMS & Competency Development</li>
+                <li>Wikipedia - Integrated Operations (Collaboration & Work Processes)</li>
+                <li>Industrial Cyber / Control Global - Comprehensive IO Guides & Case Studies</li>
+                <li>SPE - Well Integrity in IO Context (e.g., SPE-166469-MS)</li>
+                <li>Additional industry reports and academic papers on operational efficiency, human factors in drilling, and change management in complex organizations.</li>
+            </ul>
+        </div>
+        <footer class="page-footer">
+            <span class="logo-mark">AI Forward Inc.</span>
+            <span class="page-number">14</span>
+        </footer>
+    </div>
+
+</body>
+</html>
